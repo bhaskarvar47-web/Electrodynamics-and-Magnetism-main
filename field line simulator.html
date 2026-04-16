@@ -71,6 +71,7 @@
         <button id="addPos">Add Positive (+)</button>
         <button id="addNeg">Add Negative (-)</button>
         <button id="addTest">Add Test Charge</button>
+        <button id="clearAll">Clear All</button>
     </div>
 
     <div id="canvas-container">
@@ -104,6 +105,7 @@
             for (let charge of charges) {
             let dx = x-charge.x;
             let dy = y-charge.y;
+            let distanceSquared = dx*dx + dy*dy;
 
             if (distanceSquared < 25) distanceSquared = 25;
 
@@ -143,7 +145,7 @@
         for(let x=0; x<=canvas.width; x+=GRID_SIZE) {
             ctx.beginPath(); 
             ctx.moveTo(x,0);
-            ctx.lineTo(canvas.width, y);
+            ctx.lineTo(x, canvas.height);
             ctx.stroke();
         }
 
@@ -224,7 +226,7 @@
     }
 
 
-    function drawTestCharges() {
+    function drawCharges() {
         for (let charge of charges) {
            ctx.beginPath();
            ctx.arc(charge.x,  charge.y, CHARGE_RADIUS, 0, Math.PI*2);
@@ -235,13 +237,122 @@
            ctx.stroke();
            ctx.fillStyle = 'white';
            ctx.font = '20px Arial';
-           ctx.textAlign = 'centre';
+           ctx.textAlign = 'center';
            ctx.textBaseline = 'middle';
            ctx.filltext(charge.q > 0 ? '+' : '-', charge.x, charge.y +1);
         }
     }
 
-    function drawTestCharges
+    function drawTestCharges() {
+        for(let tc of testCharges) {
+            let field = calculateField(tc.x, tc.y);
+            let magnitude = Math.sqrt(field.Ex*field.Ex + field.Ey*field.Ey);
+            let angle = Math.atan2(field.Ey, field.Ex);
+
+            drawArrow(tc.x, tc.y, angle, magnitude*1.5, '#eccc68', 3);
+            ctx.beginPath();
+            ctx.arc(tc.x, tc.y, TEST_CHARGE_RADIUS, 0, Math.PI*2);
+            ctx.fillStyle = '#eccc68'; 
+            ctx.fill();
+            ctx.lineWidth=2;
+            ctx.strokeStyle = '#2f3542';
+            ctx.font = '10px Arial';
+            ctx.fillText('q0', tc.x, tc.y+1);
+        }
+    }
+
+    function render() {
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+        drawBackgroundGrid();
+        drawVectorFieldGrid();
+        drawContinuousFieldLines();
+        drawCharges();
+        drawTestCharges();
+    }
+
+    function getSpawnPosition() {
+        return {
+            x: canvas.width/2 + (Math.random()*80-40),
+            y: canvas.height/2 + (Math.random()*80-40)
+        };
+    }
+
+    document.getElementById('addPos').addEventListener('click', ()=> {
+        let pos= getSpawnPosition();
+        charges.push({x: pos.x, y:pos.y, q:1, color: '#ff4757'});
+        render();
+    })
+
+    document.getElementById('addNeg').addEventListener('click', ()=> {
+        let pos= getSpawnPosition();
+        charges.push({x: pos.x, y: pos.y, q: -1, color: '#3742fa'});
+        render();
+    });
+
+    document.getElementById('addTest').addEventListener('click', ()=> {
+        let pos= getSpawnPosition();
+        testCharges.push({x:pos.x, y: pos.y});
+        render();
+    });
+
+document.getElementById('clearAll').addEventListener('click', ()=>{
+    charges = [];
+    testCharges = [];
+    render();
+});
+
+function getMousePos(evt) {
+    const rect = canvas.getBoundingClientRect();
+    return {x: evt.clientX - rect.left, y: evt.clientY - rect.top};
+}
+
+canvas.addEventListener('mousedown', (e) => {
+    const pos = getMousePos(e);
+
+    for (let i= testCharges.length -1; i>=0; i--) {
+        let tc = testCharges[i];
+        let dx = pos.x - tc.x;
+        let dy = pos.y - tc.y;
+        if (Math.sqrt(dx*dx + dy*dy) < TEST_CHARGE_RADIUS + 8) {
+            draggingObj = tc;
+            isDragging = true;
+            return;
+        }
+    }
+
+    for (let i= charges.length -1; i>=0; i--) {
+        let charge = charges[i];
+        let dx = pos.x - charge.x;
+        let dy = pos.y - charge.y;
+        if (Math.sqrt(dx*dx + dy*dy) < CHARGE_RADIUS + 5) {
+            draggingObj = charge;
+            isDragging = true;
+            break;
+        }
+    }
+});
+
+canvas.addEventListener('mousemove', (e) => {
+    if (isDragging && draggingObj) {
+        const pos = getMousePos(e);
+        draggingObj.x = pos.x;
+        draggingObj.y = pos.y;
+        render();
+    }
+});
+
+canvas.addEventListener('mouseup', () => {
+    isDragging = false;
+    draggingObj= null;
+});
+
+canvas.addEventListener('mouseleave', () => {
+    isDragging = false;
+    draggingObj = null;
+});
+
+render();
+
     </script>
 </body>
 </html>
