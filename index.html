@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Electrodynamics</title>
@@ -176,6 +181,121 @@
                     <img src="jg king model.png" alt="Experimental model by JG king">
                     <figcaption>Experimental Model of Charge Equality by J.G. King</figcaption>
                 </figure>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Coloumb's Law</h2>
+            <ul>
+                <li>
+                    Coloumb's law is used to determine the force between two two charge particles.Two stationary electric charges repel or attract each other with a force proportional to product of magnitude of charges and inversely
+                    proportional to the sqaure of distance between them.
+                </li>
+            <p>\[F_2 = k \frac{q_1 q_2 \vec{r}_{21}}{r_{21}^2}\]</p>
+                
+                <li> in direction from charge 1 to 2. Also the forces obey Newton's Third law. Therefore
+                    <b>F<sub>2</sub>= -F<sub>1</sub></b>
+                </li>
+
+                <li>
+                    \[k = 8.988 \times 10^9 \,\frac{\mathrm{N \cdot m^2}}{\mathrm{C^2}}\]
+                    \[
+                    k = \frac{1}{4\pi \varepsilon_0}
+                    \;\Rightarrow\;
+                    \varepsilon_0 = \frac{1}{4\pi k}
+                    = 8.854 \times 10^{-12} \,\frac{\mathrm{C^2}}{\mathrm{N \cdot m^2}}
+                    \;\; \left( \text{or } \frac{\mathrm{C^2 \, s^2}}{\mathrm{kg \, m^3}} \right)
+                    \]
+                </li>
+        </ul>
+        </section>
+
+        <section>
+            <h2>Energy of System of Charges</h2>
+            
+            <ul>
+                <li>
+                    Charges are free to move under the influence of other kinds of forces, we can find the equillibrium arrangement
+                    in which charge distribution will remain stationary.
+                </li>
+
+                <li>
+                    Energy can be the useful concept because electrical forces are conservative in nature.
+                </li>
+
+                <li>
+                    First consider the work that must be done on the system to attain a particular arrangement charges.
+                </li>
+                    \[
+                    W = \int (\text{applied force}) \cdot (\text{displacement})
+                    \]
+                    \[
+                    = \int_{r=\infty}^{r_{12}} \left( -\frac{1}{4\pi \varepsilon_0} \frac{q_1 q_2}{r^2} \right) dr
+                    = \frac{1}{4\pi \varepsilon_0} \frac{q_1 q_2}{r_{12}}
+                    \]
+                <li>
+                    Above expression depicts the workdone to make the arrangement of two charges q1 and q2 which are at a distance r12.
+                    Infinite is taken as refrence because it at infinity the influence of electrostatic force will be almost zero. 
+                </li>
+                <figure>
+                    <img src="energy.png" >
+                </figure>
+
+                <li>
+                    Let q1 is fixed and q2 was made to move same final position along two different paths. Every spherical shell, such as the one
+                    indicated between r and r+dr, must be crossed by both pathways. The increment in work involves, <b>-F.ds</b> in the bit of path, is ame for both paths.
+                    The reason is that F has same magnitude at both places and directed radially from q1, while ds=dr/cosθ, hence F.ds=Fdr
+                </li>
+
+                <figure>
+                    <img src="1.png" >
+                    <figcaption>Because the force is central, the sections of different paths between r+dr and r require the same amount of workdone.</figcaption>
+                </figure>
+
+                <li>Let us now bring third charge q3 and move it to point P<sub>3</sub> whose distance from q1 is r31 and from q2 is r32. Then work required will be;</li>
+
+                \[W_3 = - \int_{\infty}^{P_3} \mathbf{F}_3 \cdot d\mathbf{s}\]
+                
+                $$
+                \begin{align*}
+                -\int \mathbf{F}_3 \cdot d\mathbf{s} &= -\int (\mathbf{F}_{31} + \mathbf{F}_{32}) \cdot d\mathbf{s} \\
+                &= -\int \mathbf{F}_{31} \cdot d\mathbf{s} - \int \mathbf{F}_{32} \cdot d\mathbf{s}.
+                \end{align*}
+                $$
+                
+                <li>That is the work required to bring q3 to P<sub>3</sub> is the sum of work needed when q1 is present alone and that needed when q2 is present alone.</li>
+
+                $$W_3 = \frac{1}{4\pi\epsilon_0} \frac{q_1 q_3}{r_{31}} + \frac{1}{4\pi\epsilon_0s} \frac{q_2 q_3}{r_{32}}.$$
+            
+                <li>The total workdone in assembling this arrangement of three charges, which we shall call U, therefore:</li>
+
+                $$U = \frac{1}{4\pi\epsilon_0} \left( \frac{q_1 q_2}{r_{12}} + \frac{q_1 q_3}{r_{13}} + \frac{q_2 q_3}{r_{23}} \right).$$
+                
+                <li>One way of writing instructions for the sum over pairs is this:</li>
+
+                $$
+                U = \frac{1}{2} \sum_{j=1}^{N} \sum_{k \neq j} \frac{1}{4\pi\epsilon_0} \frac{q_j q_k}{r_{jk}}.
+                $$
+            </ul>
+        </section>
+
+        <section>
+            <h2>Electrical Energy in Crystal Lattice</h2>
+            <ul>
+                <li>
+                    Ionic crystal like sodium chloride can be described to very good approximation, as an arrangement of positive ions (Na<sup>+</sup> )
+                    and negative ions (Cl<sup>-</sup>) alternationg a three dimensional array or lattice. In sodium chloride the arrangement is shown:
+                </li>
+
+                <figure>
+                    <img src="lattice.png" alt="NaCl crystal lattice ">
+                    <figcaption>Crystal Lattice of NaCl</figcaption>
+                </figure>
+
+                <li>
+                    
+                </li>
+
             </ul>
         </section>
     </main>
