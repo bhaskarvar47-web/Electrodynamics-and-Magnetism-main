@@ -112,7 +112,7 @@
         <section>
             <h1>Introduction to Electrodynamics</h1>
 
-            <h2>Electrical Charges</h2>
+            <h2 style="text-align: center;">Electrical Charges</h2>
             <ul>
                 <li>Classical electromagnetism deals with electricccharges and current and their interaction
                     with each other, as if all the quantities involved could be measured independently with precision.
@@ -150,7 +150,7 @@
         </section>
 
         <section>
-            <h2>Properties of Charges</h2>
+            <h2 style="text-align: center;">Properties of Charges</h2>
             <h3>1. Conservation of Charges</h3>
             <ul>
                 <li>
@@ -185,7 +185,7 @@
         </section>
 
         <section>
-            <h2>Coloumb's Law</h2>
+            <h2 style="text-align: center;">Coloumb's Law</h2>
             <ul>
                 <li>
                     Coloumb's law is used to determine the force between two two charge particles.Two stationary electric charges repel or attract each other with a force proportional to product of magnitude of charges and inversely
@@ -211,7 +211,7 @@
         </section>
 
         <section>
-            <h2>Energy of System of Charges</h2>
+            <h2 style="text-align: center;">Energy of System of Charges</h2>
             
             <ul>
                 <li>
@@ -280,7 +280,7 @@
         </section>
 
         <section>
-            <h2>Electrical Energy in Crystal Lattice</h2>
+            <h2 style="text-align: center;">Electrical Energy in Crystal Lattice</h2>
             <ul>
                 <li>
                     Ionic crystal like sodium chloride can be described to very good approximation, as an arrangement of positive ions (Na<sup>+</sup> )
@@ -293,9 +293,67 @@
                 </figure>
 
                 <li>
-                    
+                    We hope to find the potential energy per unit volume or mass of lattice. We confidently expect this is independent of the size of crystal, 
+                    can have little influence on the other. Two grams of NaCl ought to have twice the potential energy of one gram, and shape should not be 
+                    important so long as the surface atoms are small fraction of total atoms.
                 </li>
 
+                <li>
+                    We would be wrong in this expectation if the crystal were made out of ions of one sign only, then 1g of crystal would carry enormous charge. 
+                    The situation is saved by the fact that crystal structure is an alternation of equal and opposite charges, so that any microscopic bit of crystal
+                    is very nearly neutral. 
+                </li>
+
+                <li>
+                    To calculate potential energy of lattice, we first observe that every positive ion is in a position equivalent to that of every other positive ion. 
+                    The arrangement of positive ions around negative ions is exactly same as arrangement of negative ions around positive ions, and so on. Hence we may
+                    take one ion as centre, it matters not which kind, sum over its interaction with all others, and simplu multiply by total no.of ions og both kinds.
+                    This reduces ouble summation into a single sum and factor N: we must still apply the factor 1/2 to compensate for including each pair twice. 
+                </li>
+                <b>Energy of soium chloride lattice composed of total of N ions is:</b>
+                $$U = \frac{1}{2} N \sum_{k=2}^{N} \frac{1}{4\pi\epsilon_0} \frac{q_1 q_k}{r_{1k}}.$$
+
+                <li>
+                    Taking positive ion at the centre, our sum runs over all its neighbour near and far. The leading terms start out as follows:
+                </li>
+                $$U = \frac{1}{2}N \frac{1}{4\pi\epsilon_0} \left( -\frac{6e^2}{a} + \frac{12e^2}{\sqrt{2}a} - \frac{8e^2}{\sqrt{3}a} + \cdots \right).$$
+
+                <figure>
+                    <img src="lattice 2.png" >
+                    <figcaption>A portion of NaCl crystal, with the ions Na<sup>+</sup> and Cl<sup>-</sup></figcaption>
+                </figure>
+                <li>
+                    In above expression, first term comes from 6 nearest  chlorine ions, at  a distance a, the second term from 12 sodium ions on the edges of cube, and so on.
+                    It is clear incidentaly that this series doesn't converge absolutely; if we were so foolish as to try to sum all positive trms first, that sum would diverge.
+                    To evaluate such sum, we should arrange it so that we proceed outwar, including ever more distant ions, we include them in groups that represent nearly neutral shells of material.
+                    
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 style="text-align: center;">Electric Field</h2>
+
+            <div>
+                <iframe src="field line simulator.html" frameborder="0" width="100%" height="800px"></iframe>
+            </div>
+            <figure>
+                <img src="field 1.png" >
+                <figcaption>the field at a point is the vector sum of fields of each of the charges in the system.</figcaption>
+            </figure>
+            <ul>
+                <li>
+                    The electrostatic force is proportional to q, so if we divide  out by q we obtain a vector quantity that depends only on the structure of our original system
+                    of charges q1,q2,...,qN: and on the position of point (x,y,z). 
+                </li>
+
+                $$\mathbf{E}(x, y, z) = \frac{1}{4\pi\epsilon_0} \sum_{j=1}^{N} \frac{q_j \hat{\mathbf{r}}_{0j}}{r_{0j}^2}.$$
+                 
+                <p>The force on some other charge q at (x,y,z) is then: <br></p>
+
+                <p style="text-align: center;">
+                    <b>F = qE</b>
+                </p>
             </ul>
         </section>
     </main>
