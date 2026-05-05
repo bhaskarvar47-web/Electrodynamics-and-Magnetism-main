@@ -10,6 +10,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Electrodynamics</title>
     <style>
+        @font-face {
+            font-family: 'Geist';
+            src: url('Geist-Light.otf') format('opentype');
+            font-weight: 300;
+            font-style: normal;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -17,11 +24,155 @@
             background-color: #f4f7f6;
             margin: 0;
             padding: 20px;
+            font-weight: 300;
+            max-width: 1200px;
         }
 
         main {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
+            margin-left: 220px;
+            align-items: center;
+        }
+
+        .main--content{
+            margin-left: 220px;
+        }
+
+        .sidebar{
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 200px;
+            background-color: #fffcbe;
+            padding: 18px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: transform 0.3s ease;
+            z-index: 100;
+            border-right: 1.5px solid #ebe7a0;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #dbd55e #fffcbe;
+        }
+
+        .sidebar-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            color: #a09a50;
+            margin: 0 0 10px 6px;
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-220px);
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 7px 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #5a5220;
+            font-family: 'Geist', Arial, sans-serif;
+            font-size: 14px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: #f7f38e;
+            color: #888;
+        }
+
+        .sidebar a.active {
+            background-color: #dbd55e;
+            font-weight: 500;
+        }
+
+        .sidebar-search {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f0eb8c;
+            border-radius: 8px;
+            padding: 6px 10px;
+            margin-bottom: 6px;
+        }
+
+        .sidebar-search input {
+            border: none;
+            background: none;
+            outline: none;
+            font-size: 14px;
+            color: #5a5220;
+            width: 100%;
+        }
+
+        .sidebar-section {
+            font-size: 10px;
+            font-weight: 600;
+            color: #b0aa60;
+            margin: 12px 0 2px 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+        }
+
+        .sidebar-search input::placeholder {
+            color: #a09a50
+        }
+        
+        .sb-badge {
+            margin-left: auto;
+            font-size: 10px;
+            background: #d4ce60;
+            color: #4a4400;
+            border-radius: 20px;
+            padding: 1px 7px;
+            font-weight: 600;
+        }
+
+        #sidebar-toggle {
+            position: fixed;
+            top: 10px;
+            left: 210px;
+            z-index: 200;
+            background: #fffcbe;
+            border: 1px solid #dedb9f;
+            color: #1a3a6b;
+            padding: 4px 10px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: left 0.3s ease;
+        }
+
+        #sidebar-toggle.hidden {
+            left: 0px;
+        }
+
+            /*https://www.youtube.com/watch?v=10EEb4ikqAw this was my insiporation for sidebar */
+        .loop-control {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            align-items: center;
+            font-size: 14pxx;
+        }
+
+        .loop-controls label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .delirious {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         h1, h2, h3, h4 {
