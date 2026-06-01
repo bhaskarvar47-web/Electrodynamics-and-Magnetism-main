@@ -529,9 +529,51 @@
                     gives the amount of charge contained in that volume element. Thesame symbol is often used for mass per unit volume, but here we shall always give charge per unit volume. If we write 
                     ρ as a function of coordinate x,y,z, then ρ(x,y,z)dx.dy.dz is the charge contained in little box, of voulme dxdydz located at point (x,y,z).
                 </li>
+                    If the source of electric field is continuous distribution of charges rather than point charges, we replaces the sum with integral.
+
+                    $$\mathbf{E}(x, y, z) = \frac{1}{4\pi\epsilon_0} \int \frac{\rho(x', y', z') \hat{\mathbf{r}}}{r^2} dV'.$$
+                </li>
+
+                <li></li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2 style="text-align: center;">Flux</h2>
+
+            <ul>
+                <li>
+                    The relation between electric field and its source can be expressed in a much simpler way for which we define 
+                    a quantity called <b>flux</b>.
+                </li>
 
                 <li>
-                    
+                    Let us consider some electric field and some aribitary closed surface in the space. Now divide the whole surface into little patches that are so small,
+                    over any patch surface is nearly flat and vector field does not change much for that small patch. Let the area of patch has certain magnitutude in square meters,
+                    and patch defines a unique direction pointing outward from the surface. Then for every small patch we can define the area vector and the electric field vector.    
+                </li>
+
+                <li>
+                    Let E<sub>j</sub> be the electric field vector at patch number j. The scalar product E<sub>j</sub>.a<sub>j</sub>. We can name this expression as flux through a bit surface.
+                    To understand the origin of the name, we can imagine a vector function thatrepresents the velocity of motion of fluid -say in a river, where the velocity varies from one place to another
+                    but is constant in time. Denote this vector field by v, measured in m/s. 
+                </li>
+                
+                <figure>
+                    <img src="flux1.png" >
+                </figure>
+                <figure>
+                    <img src="flux2.png" > 
+                </figure>
+                <figure>
+                    <img src="flux3.png" >
+                    <figcaption>Flux through a surface is the surface integral of the normal component of the field over that surface.</figcaption>
+                </figure>
+                
+                <li>
+                    The flux of a vector field through a surface is defined as the surface integral of the normal component of the field over that surface. 
+                    If the field is uniform and the surface is flat, then the flux is simply the product of the field and the area of the surface projected in a plane perpendicular to the field.
                 </li>
             </ul>
         </section>
