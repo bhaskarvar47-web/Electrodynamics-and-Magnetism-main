@@ -575,8 +575,54 @@
                     The flux of a vector field through a surface is defined as the surface integral of the normal component of the field over that surface. 
                     If the field is uniform and the surface is flat, then the flux is simply the product of the field and the area of the surface projected in a plane perpendicular to the field.
                 </li>
+
+                <li>
+                    Now let's add up the flux through all the small patches to get flux through entire surface, a scalar quantity denoted by Φ. If the surface is closed, then we call it <b>total flux</b>. If the surface is open, then we call it <b>flux</b>.
+
+                    \[
+                    \Phi = \sum_{\text{all } j} E_j \cdot a_j
+                    \]
+                </li>
+
+                <li>
+                    Letting the patches become smaller and more numerous without limit, we pass from sum to the surface integral.
+                    \[
+                    \Phi = \int_{\text{entire surface}} \mathbf{E} \cdot d\mathbf{a}
+                    \]
+                </li>
+
+                <li>
+                    A surface integral of any vector function <b>f</b>, over the surface S, means just this: divide S into small patches, each of them represented by a vector outward, of magnitude equal to the patch area,
+                    take the scalar product of f with the area vector.
+                </li>
             </ul>
         </section>
+
+
+        <section>
+            <h2 style="text-align: center;">Gauss's Law</h2>
+
+            <ul>
+                <figure>
+                    <img src="gauss1.png" >
+                </figure>
+
+                <li>
+                    Let us suppose the the field is that of a single positive charge q, and the surface  is a sphere of radius r, centred at the point charge.
+                    \[
+                    \Phi = E \cdot (\text{total area})
+                    = \frac{q}{4\pi\epsilon_0 r^2}\cdot 4\pi r^2
+                    = \frac{q}{\epsilon_0}.
+                    \]
+                </li>
+
+                <figure>
+                    <img src="gauss2.png" >
+                    <figcaption>Showing flux due to a point charge q through sphere is equal to the total flux through the surface assumed. </figcaption>
+                </figure>
+            </ul>
+        </section>
+           
     </main>
 </body>
 </html>
