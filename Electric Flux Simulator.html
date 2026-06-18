@@ -3,33 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Introduction to Electric Field</title>
+    <title>Electric Flux Simulator</title>
     <style>
+        /*Overall layout*/
         body {
-            color: #ece6e6;
-            background-color: #1111;
-            overflow: hidden;
+            color: #d2dae2;
+            background-color: #1e272e;
+            overflow: auto;
             font-family: 'Times New Roman', Times, serif;
             margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        #ui-panel {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(30, 30, 30, 0.8);
-            border-radius: 8px;
+        .container{
+            background-color: #2c3e50;
             padding: 20px;
-            border: 1px solid #444;
-            width: 300px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
+            border-radius: 11px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        /*The drawing area*/
+        canvas {
+            background-color: #1e272e;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
-        
+        /*making control panel*/
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-direction: column;
+        }
+
+        .control-group {
+            display: flex;
+            justify-content: space-between;
+            background-color: #34495e;
+            padding: 10px 15px;
+            border-radius: 7px;
+            align-items: center;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: bold;
+            width: 150px;
+        }
+
+        input[type="range"] {
+            flex-grow: 1;
+            margin: 0 14px;
+        }
+
+        .value-display {
+            font-family: monospace;
+            font-size: 16px;
+            background: #1e272e;
+            padding: 4px 8px;
+            border-radius: 4px;
+            width: 50px;
+            text-align: center;
+        }
+
+        .metrics{
+            margin-top: 10px;
+            padding-top: 15px;
+            border-top: 2px solid #485460;
+            display: flex;
+            justify-content: space-around;
+            font-size: 18px;
+        }
+
+        .metric-value{
+            font-weight: bold;
+            color: #0fbcf9;
+        }
+
+
     </style>
 </head>
 <body>
-    
+
+    <div class="container">
+        <canvas id="simCanvas" width="400" height="400"></canvas>
+
+        <div class= "controls">
+            <div class="control-group">
+                <label>Charge (q)</label>
+                <input type="range" id="qSlider" min="-10" max="10" value="1" step="0.1">
+                <span class="value-display" id="qVal">+1</span>
+            </div>
+
+            <div class="control-group">
+                <label>Radius (r)</label>
+                <input type="range" id="rSlider" min="50" max="180" value="100" step="2">
+                <span class="value-display" id="rVal">100</span>
+            </div>
+
+            <div class="metrics">
+                <div>Electric Field (E): <span class="metric-value" id="eFieldOut"></span></div>
+                <div>Total Flux (Φ): <span class="metric-value" id="fluxout"></span></div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        //Grabing elements from HTML
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+        const qSlider = document.getElementById('qSlider');
+        const rSlider = document.getElementById('rSlider');
+        const qVal = document.getElementById('qVal');
+        const rVal = document.getElementById('rVal');
+        const fluxout = document.getElementById('fluxout');
+        const  eFieldOut = document.getElementById('eFieldOut');
+
+        //The main rendering function(core of simulator)
+        function drawSimulation() {
+            //get current slider values
+            const q = parseFloat(qSlider.value);
+            const r = parseFloat(rSlider.value);
+
+            //Update UI labels
+            qVal.innerText = q > 0 ? `+${q}` : q;
+            rVal.innerText = r;
+
+            //Calculating Physics Metrics
+            //Flux is ditectly proportional to charge and inversely proportional to permittivity of free space (ε₀)
+            const scaledR = r/50; //Scaling radius for better visualization 
+            const eField = q===0 ? 0 : Math.abs(q) / (scaledR*scaledR);
+            eFieldOut.innerText = eField.toFixed(2);
+            fluxout.innerText = q > 0 ? `+${q} (Outward)` : (q < 0 ? `${q} (Inward)` : "0");
+        
+            //Clear the canvas for new frame
+            ctx.clearRect(0, 0, canvas.width, canvas.height);   
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+
+
+            //1. Drawing the dashed gaussian surface
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, 2*Math.PI);
+            ctx.strokeStyle = '#1dd1a1';
+            ctx.setLineDash([5, 5]); //Make it dotted  or dashed
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.setLineDash([]); //Reset line dash for future drawings
+
+
+            //2. Drawing the Eectric Field Lines    
+            if (q !== 0)  {
+                //4 lines per unit charge for better visualization  
+                const numLines = Math.abs(q) * 4;
+                const angleStep = (2 * Math.PI) / numLines;
+                ctx.strokeStyle = '#ffb8b8';
+                ctx.fillStyle = '#ffb8b8';
+                ctx.lineWidth = 2;
+
+                for (let i=0; i< numLines; i++) {
+                    const angle = i * angleStep;
+                    ctx.save(); //Save canvas state
+                    ctx.translate(cx, cy); //Move origin to center
+                    ctx.rotate(angle); //Rotate to correct angle
+
+                    //Draw the main line
+                    ctx.beginPath();
+                    ctx.moveTo(25, 0); //Start just outside the charge
+                    ctx.lineTo(200, 0); // Draw off the eadge if the canvas
+                    ctx.stroke();
+
+                    //Draw the arrowhead indicating the direction
+                    ctx.beginPath();
+                    if (q>0) {
+                        ctx.moveTo(170,0);
+                        ctx.lineTo(160,-6);
+                        ctx.lineTo(160,6);
+                    }
+                    else {
+                        ctx.moveTo(35,0);
+                        ctx.lineTo(45,-6);
+                        ctx.lineTo(45,6);
+                    }
+                    ctx.fill();
+                    ctx.restore(); //Restore canvas state for next line
+                }
+            }
+
+            //3. Drawing the charge at the center
+            ctx.beginPath();
+            ctx.arc(cx, cy, 20, 0, 2*Math.PI); 
+
+            //Red for positive charge and Blue for negative charge
+            ctx.fillStyle = q>0 ? '#ff4757' : (q<0 ? '#3742fa' : '#747d8c');
+            ctx.fill();
+
+            //Draw the charge tetx (+q, -q, 0)
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 16px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(qVal.innerText, cx, cy);
+        }
+
+        //Add event listeners so the screen updates when you move a slider 
+        qSlider.addEventListener('input', drawSimulation);
+        rSlider.addEventListener('input', drawSimulation);
+
+        //run once on load to draw the initial state of the simulation
+        drawSimulation();
+    </script>
 </body>
 </html>
